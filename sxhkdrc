@@ -17,10 +17,10 @@ alt + d
 	rofi -show drun
 
 alt + w
-	chromium
+	/opt/FirefoxDeveloperEdition/firefox
 
 alt + s
-	subl3
+	mousepad	
 
 alt + f
 	pcmanfm
@@ -30,6 +30,12 @@ alt + m
 
 alt + r
 	tilix -name Ranger -e ranger
+
+alt + k
+	brightnessctl set +244	
+
+alt + j
+	brightnessctl set 244-	
 
 # alt + c
 # 	rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
@@ -49,13 +55,13 @@ super + alt + Delete
 	sh -c "$HOME/.config/bspwm/power"
 
 Print
-	flameshot full -c -p ~/Pictures/screen
+	flameshot full -c -p ~/Imágenes/screen
 
 super + Print
 	flameshot gui
 
 super + alt + Print
-	flameshot full -c -d 5000 -p ~/Pictures/screen
+	flameshot full -c -d 5000 -p ~/Imágenes/screen
 
 super + alt + m
 	notify-send "Now Playing ♫" "$(mpc current)"
