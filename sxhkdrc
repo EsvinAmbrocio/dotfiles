@@ -9,15 +9,15 @@ alt + Return
 super + Return
 	 tilix
 
-alt + t
-	$HOME/.config/bspwm/bspwmfloat tilix -name Float
+#alt + t
+#	$HOME/.config/bspwm/bspwmfloat tilix -name Float
 
 # program launcher
 alt + d
 	rofi -show drun
 
 alt + w
-	/opt/FirefoxDeveloperEdition/firefox
+	/opt/firefox-developer-edition/firefox
 
 alt + s
 	mousepad	
@@ -27,6 +27,9 @@ alt + f
 
 alt + m
 	telegram-desktop
+
+alt + n
+    nm-connection-editor
 
 alt + r
 	tilix -name Ranger -e ranger
@@ -47,12 +50,12 @@ super + ctrl + p
 # super + Delete
 # 	betterlockscreen -l blur
 
-super + Delete
-	i3lock-fancy
+# super + Delete
+#	i3lock-fancy
 
 # betterlockscreen -s blur
-super + alt + Delete
-	sh -c "$HOME/.config/bspwm/power"
+# super + alt + Delete
+#	sh -c "$HOME/.config/bspwm/power"
 
 Print
 	flameshot full -c -p ~/Imágenes/screen

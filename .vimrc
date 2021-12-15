@@ -8,7 +8,7 @@ set cursorline
 set encoding=utf-8
 set showmatch
 set sw=4
-set relativenumber
+" set relativenumber
 set laststatus=2
 set nu rnu
 set ttyfast
@@ -26,26 +26,31 @@ call plug#begin('~/.vim/plugged')
 " Themes
 Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/indentLine'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plug 'ryanoasis/vim-devicons'
 
 " IDE
 Plug 'easymotion/vim-easymotion'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdtree'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'mattn/emmet-vim'
-Plug 'qbbr/vim-twig'
-Plug 'chrisbra/vim-commentary'
-Plug 'dense-analysis/ale'
-Plug 'StanAngeloff/php.vim'
-Plug 'lambdalisue/battery.vim'
-Plug 'jreybert/vimagit'
+" Plug 'yaegassy/coc-blade', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'qbbr/vim-twig'
+" Plug 'chrisbra/vim-commentary'
+" Plug 'StanAngeloff/php.vim'
+" Plug 'lambdalisue/battery.vim'
+" Plug 'jreybert/vimagit'
+Plug 'jwalton512/vim-blade'
 Plug 'posva/vim-vue'
+Plug 'dense-analysis/ale'
+" Plug 'sbdchd/neoformat'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 " Plug 'w0rp/ale'
 " Use release branch (recommend)
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
+" Plug 'phpactor/phpactor', {'for': 'php', 'tag': '0.17.1', 'do': 'composer install --no-dev -o'}
 
 "Buscar archivos
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -65,13 +70,24 @@ let g:user_emmet_leader_key=','
 nmap <Leader>m <Plug>(easymotion-s2)
 nmap <Leader>nt :NERDTreeFind<CR>
 nmap <Leader>w :w<CR>
+nmap <Leader>sg :x<CR>
 nmap <Leader>q :q<CR>
 
 "-- FZF --
-nnoremap <C-a> :Files<CR>
+"nnoremap <C-a> :Files<CR>
+nmap <leader>f :Files<CR>
+nmap <leader>b :Buffers<CR>
+nmap <leader>gf :GFiles<CR>
+nmap <leader>sa :Ag<CR>
+nmap <leader>sr :Rg<CR>
+nmap <leader>sl :BLines<CR>
+
+" command! -bang -nargs=? -complete=dir Files
+"     \ call fzf#vim#files(<q-args>, {'options': [ '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+
 
 "--- Ariline-Theme---
-" let g:airline_theme='angr'
+" let g:airline_theme='light'
 let g:airline_powerline_fonts = 1
 
 "--vim-commentary--
@@ -80,10 +96,23 @@ autocmd FileType apache setlocal commentstring=#\ %s
 " ALE
 let g:ale_sign_error = '⛔'
 let g:ale_sign_warning = '⚠️'
-let g:ale_fixers = {
- \ 'javascript': ['eslint']
- \ }
-let g:ale_fix_on_save = 1
+" let g:ale_fixers = ['prettier','eslint']
+ 
+
+" let g:ale_fix_on_save = 1
+
+" Prettier
+" let g:prettier#autoformat_config_present = 1
+
+" coc-blade
+" autocmd BufNewFile,BufRead *.blade.php set filetype=blade
+
+" vim-devicons
+set encoding=UTF-8
+
+" vim-nerdtree-syntax-highlight
+"let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
+"let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
 
 "-- Conquer of completion --
 "Configuration
@@ -96,7 +125,7 @@ set nobackup
 set nowritebackup
 
 " Give more space for displaying messages.
-set cmdheight=2
+set cmdheight=3
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -170,11 +199,11 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>crn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>cf  <Plug>(coc-format-selected)
+nmap <leader>cf  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -186,8 +215,8 @@ augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+xmap <leader>ca  <Plug>(coc-codeaction-selected)
+nmap <leader>ca  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
@@ -226,21 +255,21 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <space>cd  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <space>ce  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <space>cc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <space>co  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <space>cs  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+nnoremap <silent><nowait> <space>cj  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+nnoremap <silent><nowait> <space>ck  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent><nowait> <space>cp  :<C-u>CocListResume<CR>
 "-----------------------------------------------------------
 "-- Exit vim --
 :imap ii <Esc>
